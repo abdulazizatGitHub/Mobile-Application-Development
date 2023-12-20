@@ -1,19 +1,32 @@
-const data = [
-    {
-      title: "Aenean leo",
-      body: "Ut tincidunt tincidunt erat. Sed cursus turpis vitae tortor. Quisque malesuada placerat nisl. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.",
-      imgUrl: "https://picsum.photos/id/11/200/300",
-    },
-    {
-      title: "In turpis",
-      body: "Aenean ut eros et nisl sagittis vestibulum. Donec posuere vulputate arcu. Proin faucibus arcu quis ante. Curabitur at lacus ac velit ornare lobortis. ",
-      imgUrl: "https://picsum.photos/id/10/200/300",
-    },
-    {
-      title: "Lorem Ipsum",
-      body: "Phasellus ullamcorper ipsum rutrum nunc. Nullam quis ante. Etiam ultricies nisi vel augue. Aenean tellus metus, bibendum sed, posuere ac, mattis non, nunc.",
-      imgUrl: "https://picsum.photos/id/12/200/300",
-    },
-  ];
-  
-  export default data;
+export const cardData = [
+  {
+    id: 1,
+    category: 'Tech',
+    imageUrl: require('../../assets/images/Category/tech.jpg')
+  },
+  {
+    id: 2,
+    category: 'Science',
+    imageUrl: require('../../assets/images/Category/science.jpg')
+  },
+  {
+    id: 3,
+    category: 'Politics',
+    imageUrl: require('../../assets/images/Category/politics.jpg')
+  },
+  {
+    id: 4,
+    category: 'Business',
+    imageUrl: require('../../assets/images/Category/business3.jpg')
+  },
+  {
+    id: 5,
+    category: 'Environment',
+    imageUrl: require('../../assets/images/Category/Environment.jpg')
+  },
+  {
+    id: 6,
+    category: 'Health',
+    imageUrl: require('../../assets/images/Category/health.jpg')
+  },
+]

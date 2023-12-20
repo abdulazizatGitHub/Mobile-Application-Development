@@ -3,7 +3,7 @@ import { Button, Card, Text } from 'react-native-paper';
 import { View, Image, ImageBackground, StyleSheet, ScrollView } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Searchbar } from 'react-native-paper';
-
+import { cardData } from '../common/carousalCardData';
 function AddCategoryScreen() {
   return (
     <SafeAreaProvider>
@@ -16,26 +16,13 @@ function AddCategoryScreen() {
         </View>
         <View style={styles.featuredContainer}><Text style={styles.headingText}>Featured</Text>
           <ScrollView contentContainerStyle={styles.cardScrollView} horizontal={true} pagingEnabled={true}>
-            <Card style={styles.cardContainer}>
-              <ImageBackground style={styles.cardImage} resizeMode='cover' source={require('../../assets/images/electronics.jpg')}>
-                <Text style={styles.cardTitle}>Electronics</Text>
+            {cardData.map((card, index) => (
+              <Card key={index} style={styles.cardContainer}>
+              <ImageBackground style={styles.cardImage} resizeMode='cover' source={card.imageUrl}>
+                <Text style={styles.cardTitle}>{card.category}</Text>
               </ImageBackground>
             </Card>
-            <Card style={styles.cardContainer}>
-              <ImageBackground style={styles.cardImage} resizeMode='cover' source={require('../../assets/images/electronics.jpg')}>
-                <Text style={styles.cardTitle}>Electronics</Text>
-              </ImageBackground>
-            </Card>
-            <Card style={styles.cardContainer}>
-              <ImageBackground style={styles.cardImage} resizeMode='cover' source={require('../../assets/images/electronics.jpg')}>
-                <Text style={styles.cardTitle}>Electronics</Text>
-              </ImageBackground>
-            </Card>
-            <Card style={styles.cardContainer}>
-              <ImageBackground style={styles.cardImage} resizeMode='cover' source={require('../../assets/images/electronics.jpg')}>
-                <Text style={styles.cardTitle}>Electronics</Text>
-              </ImageBackground>
-            </Card>
+            ))}
           </ScrollView>
         </View>
         <View style={styles.industriesContainer}><Text style={styles.headingText}>Industries</Text>
@@ -100,12 +87,14 @@ const styles = StyleSheet.create({
   cardScrollView: {
     display: 'flex', 
     flexDirection: 'row', 
-    gap: 10
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   featuredContainer: {
     width: '100%',
-    height: 270,
-    marginTop: 20
+    height: 280,
+    marginTop: 20,
+    display: 'flex',
   },
   industriesContainer: {
     width: '100%',
@@ -144,13 +133,14 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
     fontSize: 20,
     fontWeight: '800',
-    marginLeft: 5,
-    marginTop: 150
+    marginTop: 10,
   },
   cardImage: {
-    justifyContent: 'center',
+    alignItems: 'center',
     width: 150,
     height: 230,
+    borderRadius: 10,
+    overflow: 'hidden'
   },
   industriesCategories: {
     display: 'flex',
