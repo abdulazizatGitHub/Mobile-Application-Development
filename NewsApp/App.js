@@ -1,10 +1,11 @@
 import { StyleSheet, Text, View } from 'react-native';
 import BottomTab from './src/navigations/bottomTab';
+import StackNavigation from './src/navigations/stackNavigation';
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <BottomTab />
+      <StackNavigation />
     </View>
   );
 }

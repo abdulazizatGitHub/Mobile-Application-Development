@@ -14,8 +14,7 @@ const Tab = createBottomTabNavigator();
 
 function BottomTab() {
   return (
-    <NavigationContainer>
-      <Tab.Navigator
+    <Tab.Navigator
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color }) => {
             let iconName;
@@ -48,7 +47,6 @@ function BottomTab() {
         <Tab.Screen name="Add Content" component={AddCategoryScreen} />
         <Tab.Screen name="Search" component={SearchScreen} />
       </Tab.Navigator>
-    </NavigationContainer>
   );
 }
 export default BottomTab;
