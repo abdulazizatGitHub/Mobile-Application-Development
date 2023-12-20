@@ -8,7 +8,8 @@ function StackNavigation() {
     return (
         <NavigationContainer>
             <Stack.Navigator>
-                <Stack.Screen name='Home' options={{headerShown: false}} component={BottomTab} />
+                <Stack.Screen  name='Home' options={{headerShown: false}} component={BottomTab} />
+                
             </Stack.Navigator>
         </NavigationContainer>
     );

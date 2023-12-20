@@ -9,10 +9,13 @@ import FavoritesScreen from '../screens/Favorites';
 import AddCategoryScreen from '../screens/AddCategories';
 import SearchScreen from '../screens/Search';
 import MyListScreen from '../screens/MyList';
+import { Button} from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 const Tab = createBottomTabNavigator();
 
 function BottomTab() {
+  const navigation = useNavigation();
   return (
     <Tab.Navigator
         screenOptions={({ route }) => ({
@@ -36,6 +39,13 @@ function BottomTab() {
             // You can return any component that you like here!
             return <Ionicons name={iconName} size={30} color={color} />;
           },
+          headerRight: ()=>{
+            return(
+              <Button  
+              title="Login"
+              color="#215"/>
+            )
+        },
           tabBarActiveTintColor: 'tomato',
           tabBarInactiveTintColor: 'gray',
         })}
