@@ -15,7 +15,7 @@ function AddCategoryScreen() {
           />
         </View>
         <View style={styles.featuredContainer}><Text style={styles.headingText}>Featured</Text>
-          <ScrollView contentContainerStyle={styles.cardScrollView} horizontal={true} pagingEnabled={true}>
+          <ScrollView contentContainerStyle={styles.cardScrollView} horizontal={true} showsHorizontalScrollIndicator={false} pagingEnabled={true}>
             {cardData.map((card, index) => (
               <Card key={index} style={styles.cardContainer}>
               <ImageBackground style={styles.cardImage} resizeMode='cover' source={card.imageUrl}>
