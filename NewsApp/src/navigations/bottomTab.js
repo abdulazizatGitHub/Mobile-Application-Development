@@ -11,6 +11,7 @@ import SearchScreen from '../screens/Search';
 import MyListScreen from '../screens/MyList';
 import { Button} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import Login from '../screens/Login'
 
 const Tab = createBottomTabNavigator();
 
@@ -42,6 +43,7 @@ function BottomTab() {
           headerRight: ()=>{
             return(
               <Button  
+              onPress={() => navigation.navigate(Login)}
               title="Login"
               color="#215"/>
             )
