@@ -1,11 +1,15 @@
-import * as React from "react";
-import {Text,View,ScrollView,StyleSheet,TouchableOpacity,Button} from "react-native";
-import { useNavigation } from "@react-navigation/native"; // Import for navigation
+import React, { useContext } from "react";
+import { Text, View, ScrollView, StyleSheet, Button } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { AppContext } from "../common/context";
 import GreenBtn from "../components/Animated/GreenBtn";
 import AddCategoryScreen from "./AddCategories";
+
 function HomeScreen() {
   const navigation = useNavigation();
- 
+  const { user } = useContext(AppContext); // Get user data from the context
+
+ if(user) {
   return (
     <ScrollView style={styles.scrollContainer}>
       <View style={styles.centeredContent}>
@@ -15,22 +19,18 @@ function HomeScreen() {
           place.
         </Text>
       </View>
-      <View style={styles.addBtn}>
-          <GreenBtn>
-            
-      <Button onPress={() => navigation.navigate(AddCategoryScreen)}/>
-            </GreenBtn> 
-       
-      </View>
     </ScrollView>
   );
+ } else {
+  return <Text>Please LogIn First...</Text>
+ }
 }
 
 export default HomeScreen;
 
 const styles = StyleSheet.create({
   scrollContainer: {
-    flex: 1, // Make ScrollView fill the entire height
+    flex: 1,
   },
   centeredContent: {
     display: "flex",
@@ -51,5 +51,10 @@ const styles = StyleSheet.create({
     display: "flex",
     marginLeft: 230,
     marginTop: 155,
+  },
+  loginMessage: {
+    fontSize: 16,
+    color: "tomato",
+    textAlign: "center",
   },
 });

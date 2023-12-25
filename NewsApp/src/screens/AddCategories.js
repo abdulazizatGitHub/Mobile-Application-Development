@@ -4,7 +4,14 @@ import { View, Image, ImageBackground, StyleSheet, ScrollView } from 'react-nati
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Searchbar } from 'react-native-paper';
 import { cardData } from '../common/carousalCardData';
+import { useNavigation } from '@react-navigation/native';
 function AddCategoryScreen() {
+  const navigation = useNavigation();
+
+  const handleCategoryPress = (category) => {
+    navigation.navigate('News', { category });
+  };
+
   return (
     <SafeAreaProvider>
       <ScrollView>
@@ -18,7 +25,7 @@ function AddCategoryScreen() {
           <ScrollView contentContainerStyle={styles.cardScrollView} horizontal={true} showsHorizontalScrollIndicator={false} pagingEnabled={true}>
             {cardData.map((card, index) => (
               <Card key={index} style={styles.cardContainer}>
-              <ImageBackground style={styles.cardImage} resizeMode='cover' source={card.imageUrl}>
+              <ImageBackground style={styles.cardImage} resizeMode='cover' source={card.imageUrl} onPress={() => handleCategoryPress(card.category)}>
                 <Text style={styles.cardTitle}>{card.category}</Text>
               </ImageBackground>
             </Card>

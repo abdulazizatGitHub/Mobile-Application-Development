@@ -1,13 +1,11 @@
 // You can import Ionicons from @expo/vector-icons if you use Expo or
 // react-native-vector-icons/Ionicons otherwise.
 import * as React from 'react';
-import { Ionicons, Fontisto  } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { NavigationContainer } from '@react-navigation/native';
 import HomeScreen from '../screens/Home';
 import FavoritesScreen from '../screens/Favorites';
 import AddCategoryScreen from '../screens/AddCategories';
-import SearchScreen from '../screens/Search';
 import MyListScreen from '../screens/MyList';
 import { Button} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -27,14 +25,12 @@ function BottomTab() {
               iconName = focused
                 ? 'home'
                 : 'home-outline';
-            } else if (route.name === 'My List') {
-              iconName = focused ? 'list-outline' : 'list';
+            } else if (route.name === 'Account') {
+              iconName = focused ? 'person-outline' : 'person-circle-outline';
             } else if (route.name === 'Read Later') {
                 iconName = focused ? 'bookmarks-outline' : 'bookmark-outline'
             } else if (route.name === 'Add Content') {
                 iconName = focused ? 'add-outline' : 'add'
-            } else if (route.name === 'Search') {
-                iconName = focused ? 'search-outline' : 'search'
             }
 
             // You can return any component that you like here!
@@ -53,11 +49,10 @@ function BottomTab() {
         })}
         initialRouteName='Home'
       >
-        <Tab.Screen name="My List" component={MyListScreen} />
+        <Tab.Screen name="Account" component={MyListScreen} />
         <Tab.Screen name="Read Later" component={FavoritesScreen} />
         <Tab.Screen name="Home" component={HomeScreen} />
         <Tab.Screen name="Add Content" component={AddCategoryScreen} />
-        <Tab.Screen name="Search" component={SearchScreen} />
       </Tab.Navigator>
   );
 }

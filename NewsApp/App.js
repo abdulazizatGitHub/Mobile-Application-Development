@@ -1,12 +1,15 @@
 import { StyleSheet, Text, View } from 'react-native';
 import BottomTab from './src/navigations/bottomTab';
 import StackNavigation from './src/navigations/stackNavigation';
+import AppProvider from './src/common/context';
 
 export default function App() {
   return (
-    <View style={styles.container}>
+    <AppProvider>
+      <View style={styles.container}>
       <StackNavigation />
     </View>
+    </AppProvider>
   );
 }
 

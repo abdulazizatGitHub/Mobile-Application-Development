@@ -1,15 +1,62 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableWithoutFeedback, Keyboard, ImageBackground } from 'react-native';
 import { TextInput, Button, Icon } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import Header from '../Components/Header';
+import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import { doc, setDoc } from 'firebase/firestore';
+import db from '../../configFirebase';
+
 const Signup = () => {
     const navigation = useNavigation();
+  const [fullName, setFullName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+
+  const handleSignup = async () => {
+    try {
+      // Basic input validation
+      if (!fullName || !email || !password || !confirmPassword) {
+        alert('Please fill in all fields.');
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        alert('Passwords do not match.');
+        return;
+      }
+
+      // Firebase Authentication - Create user with email and password
+      const auth = getAuth();
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+
+      // Access the user details from the userCredential
+      const user = userCredential.user;
+      console.log(user);
+
+      // Use setDoc to set the data for the document
+      const userRef = await setDoc(doc(db, 'users', user.uid), {
+        fullName: fullName,
+        email: email
+      });
+
+      navigation.navigate('Home');
+    } catch (error) {
+      if (error.code === 'auth/email-already-in-use') {
+        console.error('Error signing up:', 'Email is already in use.');
+        alert('Email is already in use. If you forgot your password, use the "Forgot Password" option.');
+      } else {
+        console.error('Error signing up:', error.message);
+        alert('Error signing up. Please try again.');
+      }
+    }
+  };
+
     
     return (
        <SafeAreaProvider>
-         <ImageBackground style ={{width: "100%", height: '100%', flex: '1', justifyContent: 'center', alignItems: 'center'}} source={require('../assets/images/imageBackground.png')} resizeMode='cover'>
+         <ImageBackground style ={{width: "100%", height: '100%', flex: 1, justifyContent: 'center', alignItems: 'center'}} resizeMode='cover'>
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View style = {styles.container}>
             <View style = {styles.form}>
@@ -19,29 +66,31 @@ const Signup = () => {
                         mode="outlined"
                         label="Full Name"
                         placeholder="Full Name"
+                        onChangeText={(name) => setFullName(name)}
                     />
                     <TextInput
                         mode="outlined"
                         label="Email"
                         placeholder="Email"
-                        
+                        onChangeText={(email) => setEmail(email)}
                     />
                     <TextInput
                         mode="outlined"
                         label="Password"
                         placeholder="Password"
+                        onChangeText={(pass) => setPassword(pass)}
                     />
                     <TextInput
                         mode="outlined"
                         label="Confirm Password"
                         placeholder="Confirm Password"
-                        left ={<Icon name = 'account' />}
+                        onChangeText={(cPass) => setConfirmPassword(cPass)}
                     />
-                    <Button style = {styles.sigin_btn} icon="login" mode="contained">
+                    <Button style = {styles.sigin_btn} icon="login" mode="contained" onPress={handleSignup}>
                         SIGN UP
                     </Button>
                 </View>
-                <Text>Already have an accoung <Text style = {{color: 'blue', textDecorationLine : "underline", fontSize : '18px'}} onPress={() => navigation.navigate('Login')}>Login?</Text></Text>
+                <Text>Already have an accoung <Text style = {{color: 'blue', textDecorationLine : "underline", fontSize : 18}}>Login?</Text></Text>
             </View>
         </View>
         </TouchableWithoutFeedback>
@@ -76,7 +125,7 @@ const styles = StyleSheet.create({
 
     heading: {
         fontWeight: '800',
-        fontSize: '25px',
+        fontSize: 25,
     },
 
     form_input: {
@@ -90,7 +139,8 @@ const styles = StyleSheet.create({
         width: '85%',
         position: 'relative',
         left: '8%',
-        top: '5%'
+        top: '5%',
+        backgroundColor: 'tomato'
     },
     titleMessage: {
         flexDirection: 'column',

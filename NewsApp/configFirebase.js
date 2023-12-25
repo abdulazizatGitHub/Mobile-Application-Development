@@ -4,15 +4,13 @@ import { initializeApp } from "firebase/app";
 import { getFirestore } from 'firebase/firestore';
 import {getAuth} from "firebase/auth";
 
-
 const firebaseConfig = {
-  apiKey: "AIzaSyC8Ic_DozDqeDLhRZ4VvCjCcZKQQvC-YNg",
-  authDomain: "news-5ced9.firebaseapp.com",
-  projectId: "news-5ced9",
-  storageBucket: "news-5ced9.appspot.com",
-  messagingSenderId: "119401833365",
-  appId: "1:119401833365:web:d6ae55dcb7a8b32f0d0c9c",
-  measurementId: "G-VDN1X7NN27"
+  apiKey: "AIzaSyCS3oAAyI1Woul8Av09hN4nOlJLwuBOQzU",
+  authDomain: "trendspot-058.firebaseapp.com",
+  projectId: "trendspot-058",
+  storageBucket: "trendspot-058.appspot.com",
+  messagingSenderId: "560398627317",
+  appId: "1:560398627317:web:9f143cb468fc9839c630bc"
 };
 
 // Initialize Firebase
