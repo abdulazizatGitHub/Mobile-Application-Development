@@ -1,15 +1,23 @@
-import * as React from 'react';
+import React, { useContext } from 'react';
 import { Button, Card, Text } from 'react-native-paper';
 import { View, Image, ImageBackground, StyleSheet, ScrollView } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Searchbar } from 'react-native-paper';
 import { cardData } from '../common/carousalCardData';
 import { useNavigation } from '@react-navigation/native';
+import { funCategory, industriesCategory } from '../common/categoriesData';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { AppContext } from '../common/context';
 function AddCategoryScreen() {
   const navigation = useNavigation();
+  const { user, addCategory } = useContext(AppContext);
 
-  const handleCategoryPress = (category) => {
-    navigation.navigate('News', { category });
+  const handleCategoryPress = async (category) => {
+    if (user) {
+      await addCategory(category); // Make sure to use `await` as `addCategory` might be an asynchronous function
+    } else {
+      navigation.navigate('Login'); // Navigate to the login screen
+    }
   };
 
   return (
@@ -24,55 +32,40 @@ function AddCategoryScreen() {
         <View style={styles.featuredContainer}><Text style={styles.headingText}>Featured</Text>
           <ScrollView contentContainerStyle={styles.cardScrollView} horizontal={true} showsHorizontalScrollIndicator={false} pagingEnabled={true}>
             {cardData.map((card, index) => (
-              <Card key={index} style={styles.cardContainer}>
-              <ImageBackground style={styles.cardImage} resizeMode='cover' source={card.imageUrl} onPress={() => handleCategoryPress(card.category)}>
+              <TouchableOpacity onPress={() => handleCategoryPress(card.category)}>
+                <Card key={index} style={styles.cardContainer}>
+              <ImageBackground style={styles.cardImage} resizeMode='cover' source={card.imageUrl}>
                 <Text style={styles.cardTitle}>{card.category}</Text>
               </ImageBackground>
             </Card>
+              </TouchableOpacity>
             ))}
           </ScrollView>
         </View>
         <View style={styles.industriesContainer}><Text style={styles.headingText}>Industries</Text>
-          <View style={styles.industriesCategories}>
-              <View style={styles.categoriesImage}><Image style={{width: '100%'}} source={require('../../assets/images/news.png')} /></View>
-              <Text style={styles.categoriesText}>Categories</Text>
-          </View>
-          <View style={styles.industriesCategories}>
-              <View style={styles.categoriesImage}><Image style={{width: '100%'}} source={require('../../assets/images/news.png')} /></View>
-              <Text style={styles.categoriesText}>Categories</Text>
-          </View>
-          <View style={styles.industriesCategories}>
-              <View style={styles.categoriesImage}><Image style={{width: '100%'}} source={require('../../assets/images/news.png')} /></View>
-              <Text style={styles.categoriesText}>Categories</Text>
-          </View>
-          <View style={styles.industriesCategories}>
-              <View style={styles.categoriesImage}><Image style={{width: '100%'}} source={require('../../assets/images/news.png')} /></View>
-              <Text style={styles.categoriesText}>Categories</Text>
-          </View>
-          <View style={styles.industriesCategories}>
-              <View style={styles.categoriesImage}><Image style={{width: '100%'}} source={require('../../assets/images/news.png')} /></View>
-              <Text style={styles.categoriesText}>Categories</Text>
-          </View>
-          <View style={styles.industriesCategories}>
-              <View style={styles.categoriesImage}><Image style={{width: '100%'}} source={require('../../assets/images/news.png')} /></View>
-              <Text style={styles.categoriesText}>Categories</Text>
-          </View>
-          <View style={styles.industriesCategories}>
-              <View style={styles.categoriesImage}><Image style={{width: '100%'}} source={require('../../assets/images/news.png')} /></View>
-              <Text style={styles.categoriesText}>Categories</Text>
-          </View>
-          <View style={styles.industriesCategories}>
-              <View style={styles.categoriesImage}><Image style={{width: '100%'}} source={require('../../assets/images/news.png')} /></View>
-              <Text style={styles.categoriesText}>Categories</Text>
-          </View>
-          <View style={styles.industriesCategories}>
-              <View style={styles.categoriesImage}><Image style={{width: '100%'}} source={require('../../assets/images/news.png')} /></View>
-              <Text style={styles.categoriesText}>Categories</Text>
-          </View>
+          {industriesCategory.map((data, index) => (
+            <TouchableOpacity onPress={() => handleCategoryPress(data.category)}>
+              <View key={index} style={styles.industriesCategories}>
+            <View style={styles.categoriesImage}><Image style={styles.image} source={data.imageUrl}/></View>
+            <Text style={styles.categoriesText}>{data.category}</Text>
+            <Text style={styles.addCategroy} >+</Text>
         </View>
-        <View style={styles.trendsContainer}><Text style={styles.headingText}>Trends</Text></View>
-        <View style={styles.skillsContainer}><Text style={styles.headingText}>Skills</Text></View>
-        <View style={styles.funContainer}><Text style={styles.headingText}>Fun</Text></View>
+            </TouchableOpacity>
+          ))
+          }
+        </View>
+        <View style={styles.funContainer}>
+          <Text style={styles.headingText}>Fun</Text>
+          {funCategory.map((data, index) => (
+            <TouchableOpacity onPress={() => handleCategoryPress(data.category)}>
+              <View key={index} style={styles.industriesCategories}>
+            <View style={styles.categoriesImage}><Image style={styles.image} source={data.imageUrl} /></View>
+            <Text style={styles.categoriesText}>{data.category}</Text>
+        </View>
+            </TouchableOpacity>
+          ))
+          }
+        </View>
       </ScrollView>
     </SafeAreaProvider>
   );
@@ -105,28 +98,12 @@ const styles = StyleSheet.create({
   },
   industriesContainer: {
     width: '100%',
-    height: 700,
-    marginTop: 15
-  },
-  trendsContainer: {
-    width: '100%',
     height: 500,
-    borderWidth: 1,
-    borderColor: 'black',
-    marginTop: 15
-  },
-  skillsContainer: {
-    width: '100%',
-    height: 400,
-    borderWidth: 1,
-    borderColor: 'black',
     marginTop: 15
   },
   funContainer: {
     width: '100%',
-    height: 500,
-    borderWidth: 1,
-    borderColor: 'black',
+    height: 350,
     marginTop: 15
   },
   cardContainer: {
@@ -160,8 +137,6 @@ const styles = StyleSheet.create({
   categoriesImage: {
     width: '15%',
     height: 50,
-    borderWidth: 2,
-    borderColor: 'blue',
     marginLeft: 25,
     borderRadius: 15
   },
@@ -175,6 +150,20 @@ const styles = StyleSheet.create({
     fontWeight: '900',
     fontSize: 15,
     color: 'tomato'
+  },
+  image: {
+    width: '100%',
+    height: 50,
+    borderRadius: 15,
+    overflow: 'hidden'
+  },
+  addCategroy: {
+    width: 50,
+    height: 20,
+    fontWeight: '700',
+    fontSize: 20,
+    position: 'absolute', 
+    right: 20
   }
 });
 export default AddCategoryScreen;
